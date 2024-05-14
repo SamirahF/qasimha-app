@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:frontend/screen/sign_up.dart';
 // import 'package:flutter_svg/flutter_svg.dart';
-import 'package:frontend/screen/start_screen.dart';
+// import 'package:frontend/screen/start_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
