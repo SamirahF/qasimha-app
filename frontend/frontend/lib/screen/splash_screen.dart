@@ -35,7 +35,7 @@ class SplashScreenState extends State<SplashScreen>
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        color: Color.fromARGB(255, 197, 207, 208),
+        color: const Color(0xFF7AC3C6),
         child: const Image(
           image: Svg(
             'assets/logo.svg',
