@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 // import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend/screen/start_screen.dart';
 
@@ -24,7 +25,6 @@ class SplashScreenState extends State<SplashScreen>
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: SystemUiOverlay.values);
@@ -33,13 +33,16 @@ class SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
-      decoration: const BoxDecoration(
-          gradient: LinearGradient(colors: [
-        Color.fromARGB(255, 230, 223, 241),
-        Color.fromARGB(255, 239, 211, 183),
-        Color.fromARGB(255, 70, 172, 176),
-      ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
-    ));
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        color: const Color(0xFF7AC3C6),
+        child: const Image(
+          image: Svg(
+            'assets/logo.svg',
+          ),
+        ),
+      ),
+    );
   }
 }
