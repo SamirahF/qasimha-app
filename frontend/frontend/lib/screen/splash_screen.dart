@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+import 'package:frontend/screen/sign_up.dart';
 // import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend/screen/start_screen.dart';
 
@@ -19,7 +20,7 @@ class SplashScreenState extends State<SplashScreen>
     super.initState();
     Future.delayed(const Duration(seconds: 2), () {
       Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (_) => StartScreen()));
+          .pushReplacement(MaterialPageRoute(builder: (_) => SignUpScreen()));
     });
   }
 
