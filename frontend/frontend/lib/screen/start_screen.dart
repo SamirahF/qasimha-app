@@ -32,7 +32,7 @@ class _StartScreenState extends State<StartScreen> {
             children: [
               Page(
                   currentPage: _currentPage,
-                  color: Colors.white,
+                  color: Colors.white54,
                   text:
                       'مسافر مع قروب؟ لا تشيل هم تطبيقنا بيساعدك في تنظيم مدفوعات السفرة',
                   onNextPressed: nextPage),
