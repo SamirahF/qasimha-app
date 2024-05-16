@@ -3,5 +3,6 @@ from core.views.auth_views import *
 
 router = routers.DefaultRouter()
 #--------below is final version
-router.register('api', UserViewset)
+router.register('user', UserViewset)
+router.register('fb', FeedbackViewset)
 

@@ -8,7 +8,7 @@ var net = 'http://127.0.0.1:8000/';
 Future<User> signUp(String user_fname, String user_lname, String user_email,
     String user_password) async {
   try {
-    var request = http.MultipartRequest('POST', Uri.parse(net + 'api/'));
+    var request = http.MultipartRequest('POST', Uri.parse(net + 'user/'));
     request.fields['username'] = '@' + user_fname;
     request.fields['first_name'] = user_fname;
     request.fields['last_name'] = user_lname;

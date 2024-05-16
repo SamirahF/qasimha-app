@@ -16,3 +16,7 @@ class User(AbstractUser):
     email = models.EmailField(unique=True, blank=False)
     def __str__(self):
         return self.first_name
+
+
+class Feedback(models.Model):
+    feedback = models.TextField()

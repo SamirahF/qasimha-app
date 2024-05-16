@@ -124,8 +124,11 @@ class _SignUpFormState extends State<SignUpForm> {
                   print('Last Name: ${_lastNameController.text}');
                   print('Email: ${_emailController.text}');
                   print('Password: ${_passwordController.text}');
-                  getSignUp(_firstNameController.text, _lastNameController.text,
-                      _emailController.text, _passwordController.text);
+                  print(getSignUp(
+                      _firstNameController.text,
+                      _lastNameController.text,
+                      _emailController.text,
+                      _passwordController.text));
                   // You might want to navigate to another screen after successful signup
                 }
               },
