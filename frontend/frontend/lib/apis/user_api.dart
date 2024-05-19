@@ -30,3 +30,23 @@ Future<User> signUp(String user_fname, String user_lname, String user_email,
     return Future.error(e);
   }
 }
+
+Future<User?> login(String email, String password) async {
+  final response = await http.post(
+    Uri.parse(net + 'user/login/'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, String>{
+      'email': email,
+      'password': password,
+    }),
+  );
+
+  if (response.statusCode == 200) {
+    print("successful login!");
+    return User.fromJson(response.body);
+  } else {
+    throw Exception('Failed to login');
+  }
+}

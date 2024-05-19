@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend/const.dart';
+import 'package:frontend/screen/login.dart';
 import 'package:frontend/screen/sign_up.dart';
 
 class StartScreen extends StatefulWidget {
@@ -79,7 +80,7 @@ class _StartScreenState extends State<StartScreen> {
     if (_currentPage == 2) {
       // to navigate to a different screen
       Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => SignUpScreen()));
+          .push(MaterialPageRoute(builder: (context) => LoginScreen()));
     }
   }
 
