@@ -55,30 +55,38 @@ class _LoginFormState extends State<LoginForm> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(height: 10.0),
-            TextFormField(
-              controller: _emailController,
-              decoration: InputDecoration(labelText: 'Email'),
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'Please enter your email';
-                }
-                // You can add more validation for email format if needed
-                return null;
-              },
+            const SizedBox(height: 10.0),
+            Directionality(
+              textDirection: TextDirection.rtl,
+              child: TextFormField(
+                controller: _emailController,
+                decoration:
+                    const InputDecoration(labelText: 'ادخل اسم المستخدم '),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'فضلاً ادخل اسم المستخدم';
+                  }
+                  // You can add more validation for email format if needed
+                  return null;
+                },
+              ),
             ),
-            SizedBox(height: 10.0),
-            TextFormField(
-              controller: _passwordController,
-              decoration: InputDecoration(labelText: 'Password'),
-              obscureText: true,
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'Please enter a password';
-                }
-                // You can add more validation for password strength if needed
-                return null;
-              },
+            const SizedBox(height: 10.0),
+            Directionality(
+              textDirection: TextDirection.rtl,
+              child: TextFormField(
+                controller: _passwordController,
+                decoration:
+                    const InputDecoration(labelText: 'ادخل كلمة المرور'),
+                obscureText: true,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'فضلاً ادخل كلمة المرور';
+                  }
+                  // You can add more validation for password strength if needed
+                  return null;
+                },
+              ),
             ),
             const SizedBox(height: 20.0),
             ElevatedButton(
@@ -94,7 +102,7 @@ class _LoginFormState extends State<LoginForm> {
                   // You might want to navigate to another screen after successful signup
                 }
               },
-              child: Text('Login'),
+              child: const Text('سجل دخولك'),
             ),
             const SizedBox(
               height: 50,
@@ -102,11 +110,11 @@ class _LoginFormState extends State<LoginForm> {
             RichText(
               textAlign: TextAlign.center,
               text: TextSpan(
-                text: "Don't have an account? ",
+                text: " ليس لديك حساب؟",
                 style: const TextStyle(color: Colors.black),
                 children: <TextSpan>[
                   TextSpan(
-                    text: 'Sign up',
+                    text: ' إنشاء حساب',
                     style: const TextStyle(color: Colors.blue),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {

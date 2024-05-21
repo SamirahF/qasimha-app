@@ -5,11 +5,11 @@ import 'package:http/http.dart' as http;
 
 var net = 'http://127.0.0.1:8000/';
 
-Future<User> signUp(String user_fname, String user_lname, String user_email,
-    String user_password) async {
+Future<User> signUp(String username, user_fname, String user_lname,
+    String user_email, String user_password) async {
   try {
     var request = http.MultipartRequest('POST', Uri.parse(net + 'user/'));
-    request.fields['username'] = '@' + user_fname;
+    request.fields['username'] = username;
     request.fields['first_name'] = user_fname;
     request.fields['last_name'] = user_lname;
     request.fields['email'] = user_email;

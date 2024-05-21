@@ -22,6 +22,7 @@ class SignUpForm extends StatefulWidget {
 
 class _SignUpFormState extends State<SignUpForm> {
   final _formKey = GlobalKey<FormState>();
+  final _usernameController = TextEditingController();
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
   final _emailController = TextEditingController();
@@ -30,6 +31,7 @@ class _SignUpFormState extends State<SignUpForm> {
 
   @override
   void dispose() {
+    _usernameController.dispose();
     _firstNameController.dispose();
     _lastNameController.dispose();
     _emailController.dispose();
@@ -38,23 +40,34 @@ class _SignUpFormState extends State<SignUpForm> {
     super.dispose();
   }
 
-  getSignUp(String fname, lname, email, pass) async {
-    signUp(fname, lname, email, pass);
+  getSignUp(String username, fname, lname, email, pass) async {
+    signUp(username, fname, lname, email, pass);
     Navigator.of(context).pop();
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(20.0),
+      padding: const EdgeInsets.all(20.0),
       child: Form(
         key: _formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             TextFormField(
+              controller: _usernameController,
+              decoration: const InputDecoration(labelText: 'Username'),
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'Please enter your your username';
+                }
+                return null;
+              },
+            ),
+            const SizedBox(height: 10.0),
+            TextFormField(
               controller: _firstNameController,
-              decoration: InputDecoration(labelText: 'First Name'),
+              decoration: const InputDecoration(labelText: 'First Name'),
               validator: (value) {
                 if (value!.isEmpty) {
                   return 'Please enter your first name';
@@ -62,10 +75,10 @@ class _SignUpFormState extends State<SignUpForm> {
                 return null;
               },
             ),
-            SizedBox(height: 10.0),
+            const SizedBox(height: 10.0),
             TextFormField(
               controller: _lastNameController,
-              decoration: InputDecoration(labelText: 'Last Name'),
+              decoration: const InputDecoration(labelText: 'Last Name'),
               validator: (value) {
                 if (value!.isEmpty) {
                   return 'Please enter your last name';
@@ -73,10 +86,10 @@ class _SignUpFormState extends State<SignUpForm> {
                 return null;
               },
             ),
-            SizedBox(height: 10.0),
+            const SizedBox(height: 10.0),
             TextFormField(
               controller: _emailController,
-              decoration: InputDecoration(labelText: 'Email'),
+              decoration: const InputDecoration(labelText: 'Email'),
               validator: (value) {
                 if (value!.isEmpty) {
                   return 'Please enter your email';
@@ -85,10 +98,10 @@ class _SignUpFormState extends State<SignUpForm> {
                 return null;
               },
             ),
-            SizedBox(height: 10.0),
+            const SizedBox(height: 10.0),
             TextFormField(
               controller: _passwordController,
-              decoration: InputDecoration(labelText: 'Password'),
+              decoration: const InputDecoration(labelText: 'Password'),
               obscureText: true,
               validator: (value) {
                 if (value!.isEmpty) {
@@ -98,10 +111,10 @@ class _SignUpFormState extends State<SignUpForm> {
                 return null;
               },
             ),
-            SizedBox(height: 10.0),
+            const SizedBox(height: 10.0),
             TextFormField(
               controller: _confirmPasswordController,
-              decoration: InputDecoration(labelText: 'Confirm Password'),
+              decoration: const InputDecoration(labelText: 'Confirm Password'),
               obscureText: true,
               validator: (value) {
                 if (value!.isEmpty) {
@@ -113,7 +126,7 @@ class _SignUpFormState extends State<SignUpForm> {
                 return null;
               },
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             ElevatedButton(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
@@ -125,6 +138,7 @@ class _SignUpFormState extends State<SignUpForm> {
                   print('Email: ${_emailController.text}');
                   print('Password: ${_passwordController.text}');
                   print(getSignUp(
+                      _usernameController.text,
                       _firstNameController.text,
                       _lastNameController.text,
                       _emailController.text,

@@ -29,14 +29,12 @@ class UserViewset(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['post'], url_path='login')
     def login_user(self,request):
-        email = request.data.get('email')
+        username = request.data.get('username')
         password = request.data.get('password')
         try: 
-                user = User.objects.get(email=email)
-                print(check_password(password, user.password))
-                print("authentication with username:" , authenticate(username =user.username, password=password))
+                user = authenticate(username =username, password=password)
+                print(user)
                 if user is not None:
-                    # print(user)
                     serializer = UserSerializer(user)
                     return Response(serializer.data)
                 else:
