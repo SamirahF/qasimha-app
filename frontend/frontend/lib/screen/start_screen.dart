@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend/const.dart';
 import 'package:frontend/screen/login.dart';
-import 'package:frontend/screen/sign_up.dart';
 
+//
 class StartScreen extends StatefulWidget {
   @override
   _StartScreenState createState() => _StartScreenState();
