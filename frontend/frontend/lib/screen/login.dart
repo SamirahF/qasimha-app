@@ -1,8 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend/const.dart';
 import 'package:frontend/screen/landing_screen.dart';
 import 'package:frontend/screen/sign_up.dart';
 import '../apis/user_api.dart';
+import 'package:another_flushbar/flushbar.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
@@ -10,7 +12,7 @@ class LoginScreen extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Login'),
+          title: const Text('تسجيل الدخول'),
         ),
         body: LoginForm(),
       ),
@@ -25,87 +27,121 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
+  final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
 
   @override
   void dispose() {
-    _emailController.dispose();
+    _usernameController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
 
-  getLogin(String email, pass) async {
-    login(email, pass);
-    Navigator.of(context).pop();
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => LandingScreen(),
+  getLogin(String username, String password) async {
+    final result = await login(username, password);
+    if (result['user'] != null) {
+      Navigator.of(context).pop();
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const LandingScreen(),
+        ),
+      );
+    } else {
+      setState(() {
+        _showErrorFlushbar(context, result['error']);
+      });
+    }
+  }
+
+  void _showErrorFlushbar(BuildContext context, String message) {
+    Flushbar(
+      messageText: Center(
+        child: Text(
+          message,
+          style: const TextStyle(color: Colors.white),
+        ),
       ),
-    );
+      backgroundColor: error,
+      duration: const Duration(seconds: 4),
+      flushbarPosition: FlushbarPosition.TOP,
+      margin: const EdgeInsets.all(8),
+      borderRadius: BorderRadius.circular(8),
+    ).show(context);
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(20.0),
+      padding: const EdgeInsets.all(20.0),
       child: Form(
         key: _formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const SizedBox(height: 10.0),
+            const Directionality(
+              textDirection: TextDirection.rtl,
+              child: Text(
+                "مرحباً بعودتك 👋 ",
+                style: TextStyle(fontSize: 22),
+              ),
+            ),
+            const SizedBox(height: 15),
             Directionality(
               textDirection: TextDirection.rtl,
               child: TextFormField(
-                controller: _emailController,
-                decoration:
-                    const InputDecoration(labelText: 'ادخل اسم المستخدم '),
+                controller: _usernameController,
+                decoration: const InputDecoration(
+                  labelText: 'اسم المستخدم',
+                  border: OutlineInputBorder(),
+                  contentPadding:
+                      EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                ),
+                textDirection: TextDirection.ltr, // Ensure LTR for input text
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'فضلاً ادخل اسم المستخدم';
                   }
-                  // You can add more validation for email format if needed
                   return null;
                 },
               ),
             ),
-            const SizedBox(height: 10.0),
+            const SizedBox(height: 35),
             Directionality(
               textDirection: TextDirection.rtl,
               child: TextFormField(
                 controller: _passwordController,
-                decoration:
-                    const InputDecoration(labelText: 'ادخل كلمة المرور'),
+                decoration: const InputDecoration(
+                  labelText: 'كلمة المرور',
+                  border: OutlineInputBorder(),
+                  contentPadding:
+                      EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                ),
                 obscureText: true,
+                textDirection: TextDirection.ltr, // Ensure LTR for input text
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'فضلاً ادخل كلمة المرور';
                   }
-                  // You can add more validation for password strength if needed
                   return null;
                 },
               ),
             ),
-            const SizedBox(height: 20.0),
+            const SizedBox(height: 30),
             ElevatedButton(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  // Form is valid, proceed with signup logic
-                  // You can implement signup logic here
-                  // For now, let's just print the form data
-                  print('Email: ${_emailController.text}');
-                  print('Password: ${_passwordController.text}');
-                  print(getLogin(
-                      _emailController.text, _passwordController.text));
-                  // You might want to navigate to another screen after successful signup
+                  getLogin(_usernameController.text, _passwordController.text);
                 }
               },
-              child: const Text('سجل دخولك'),
+              style: ElevatedButton.styleFrom(backgroundColor: primary1),
+              child: const Text(
+                'سجل دخولك',
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
             ),
             const SizedBox(
-              height: 50,
+              height: 20,
             ),
             RichText(
               textAlign: TextAlign.center,
@@ -118,7 +154,6 @@ class _LoginFormState extends State<LoginForm> {
                     style: const TextStyle(color: Colors.blue),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
-                        // Navigate to the sign-up screen
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -129,7 +164,7 @@ class _LoginFormState extends State<LoginForm> {
                   ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

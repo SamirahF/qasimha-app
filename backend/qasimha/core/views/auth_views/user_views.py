@@ -31,16 +31,14 @@ class UserViewset(viewsets.ModelViewSet):
     def login_user(self,request):
         username = request.data.get('username')
         password = request.data.get('password')
-        try: 
-                user = authenticate(username =username, password=password)
-                print(user)
-                if user is not None:
-                    serializer = UserSerializer(user)
-                    return Response(serializer.data)
-                else:
-                    return Response({"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
-        except User.DoesNotExist:
-                return Response({"error": "Invalid email"}, status=status.HTTP_401_UNAUTHORIZED)
+
+        
+        user = authenticate(username =username, password=password)
+        if user is not None:
+            serializer = UserSerializer(user)
+            return Response(serializer.data)
+        else:
+                return Response({"error": "خطأ في إسم المستخدم/كلمة المرور"}, status=status.HTTP_401_UNAUTHORIZED)
 
 class FeedbackViewset(viewsets.ModelViewSet):
     queryset = Feedback.objects.all()

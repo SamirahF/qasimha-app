@@ -5,21 +5,19 @@ import 'package:http/http.dart' as http;
 
 var net = 'http://127.0.0.1:8000/';
 
-Future<User> signUp(String username, user_fname, String user_lname,
-    String user_email, String user_password) async {
+Future<User> signUp(String username, fistName, String lastName, String email,
+    String password) async {
   try {
     var request = http.MultipartRequest('POST', Uri.parse(net + 'user/'));
     request.fields['username'] = username;
-    request.fields['first_name'] = user_fname;
-    request.fields['last_name'] = user_lname;
-    request.fields['email'] = user_email;
-    request.fields['password'] = user_password;
+    request.fields['first_name'] = fistName;
+    request.fields['last_name'] = lastName;
+    request.fields['email'] = email;
+    request.fields['password'] = password;
 
     var streamedResponse = await request.send();
-    print(streamedResponse.statusCode);
     if (streamedResponse.statusCode == 201 ||
         streamedResponse.statusCode == 200) {
-      print("NEW USER");
       var response = await http.Response.fromStream(streamedResponse);
       final String responseString = response.body;
       return User.fromJson(responseString);
@@ -31,22 +29,29 @@ Future<User> signUp(String username, user_fname, String user_lname,
   }
 }
 
-Future<User?> login(String email, String password) async {
+Future<Map<String, dynamic>> login(String username, String password) async {
   final response = await http.post(
     Uri.parse(net + 'user/login/'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
     body: jsonEncode(<String, String>{
-      'email': email,
+      'username': username,
       'password': password,
     }),
   );
 
   if (response.statusCode == 200) {
-    print("successful login!");
-    return User.fromJson(response.body);
+    final String responseString = response.body;
+    return {
+      'user': User.fromJson(responseString),
+      'error': null,
+    };
   } else {
-    throw Exception('Failed to login');
+    final error = jsonDecode(utf8.decode(response.bodyBytes))['error'];
+    return {
+      'user': null,
+      'error': error,
+    };
   }
 }
